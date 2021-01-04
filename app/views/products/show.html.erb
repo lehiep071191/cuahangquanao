@@ -1,0 +1,194 @@
+<style type="text/css">
+	.tablink {
+	  background-color: #555;
+	  color: white;
+	  float: left;
+	  border: none;
+	  outline: none;
+	  cursor: pointer;
+	  padding: 14px 16px;
+	  font-size: 17px;
+	  width: 25%;
+	  height: 100%
+	}
+	.tabink:hover {
+		background-color: #777;
+	}
+	.tabcontent{
+		margin-top: 20px;
+	}
+
+</style>
+<div class = "row" style = "margin-bottom: :   30px">
+	<div class = "col-sm-6" style = "float: left;">
+		<span >
+			<% if @product.url_image.present? %>
+				<%= link_to image_tag(@product.url_image, width: "70%"), product_path(@product)  %>
+			<% else %>
+				<%= link_to image_tag('https://cdn.filepicker.io/api/file/B8yKUfUSpCCsH0OvG3Eu/convert?fit=max&h=874&w=1312&compress=true&fit=max', width: "70%"), product_path(@product) %>
+			<% end %>	
+		</span>
+		<div style = "height: 70px; width: 100%; background-color: gray">
+			<button class = "tablink" onclick = "tabFunction('Comment', this, 'orange')" id = "openDefault">
+				Comment(<span id = "count-comment"><%= @product.comments.count%></span>)
+			</button>
+			<button class = "tablink" onclick = "tabFunction('Hotproduct', this, 'green')">
+				Đề Xuất
+			</button>
+			<button class = "tablink" onclick = "tabFunction('Newproduct', this, 'blue')">
+				
+			</button>
+			<button class = "tablink" onclick = "tabFunction('rate', this, 'yellow')">
+				Danh gia
+			</button>
+		</div>
+		<div class = "tabcontent" id = "Comment">
+			<div class = "append-comment">	
+				<%= render @comments %> 
+			</div>
+			<% if user_signed_in? %>
+				<textarea  name="giatritext" class = 'form-control' style = "margin-top: 50px" ></textarea>
+				<input type="hidden" name="product_id" value="<%= @product.id %>">
+				<input type="hidden" name="user_id" value = "<%= current_user.id %>">
+				<div id = "noitice-alert">
+					
+				</div>
+				<button class = " create_comment btn btn-primary">comment</button>
+			<% end %>	
+		</div>
+		<div class = "tabcontent"id = "Hotproduct">
+			<div class = "col-sm-12">
+				<% Product.limit(3).order("RAND()").each do |product| %>
+				<div class = "col-sm-4">	
+					<% if product.url_image.present? %>
+					<%= link_to image_tag(product.url_image, width: "90%"), product_path(product)  %>
+					<% else %>
+						<%= link_to image_tag('https://cdn.filepicker.io/api/file/B8yKUfUSpCCsH0OvG3Eu/convert?fit=max&h=874&w=1312&compress=true&fit=max', width: "90%"), product_path(product) %>
+				<% end %>	
+					<%= product.name %>
+				</div>
+				<% end %>
+			</div>
+		</div>
+		<div class = "tabcontent"id = "Newproduct">
+		</div>	
+		<div class = "tabcontent"id = "rate">
+			<% if @rate.nil? %>
+			<div id = "form-rate">
+				<input class="star star-5" id="star-5" type="radio" value="5" name="rate[rating]">
+				<label class="star star-5" for="star-5"></label>
+				<input class="star star-4" id="star-4" type="radio" value="4" name="rate[rating]">
+				<label class="star star-4" for="star-4"></label>
+				<input class="star star-3" id="star-3" type="radio" value="3" name="rate[rating]">
+				<label class="star star-3" for="star-3"></label>
+				<input class="star star-2" id="star-2" type="radio" value="2" name="rate[rating]">
+				 <label class="star star-2" for="star-2"></label>
+				<input class="star star-1" id="star-1" type="radio" value="1" name="rate[rating]"> 
+				<label class="star star-1" for="star-1"></label>
+			</div>
+			<% end %>	
+			<% if @rate.present?  %>
+				<input class="star-update star-5" id="star-5" type="radio" value="5" name="rate[rating]">
+				<label class="star star-5" for="star-5"></label>
+				<input class="star-update star-4" id="star-4" type="radio" value="4" name="rate[rating]">
+				<label class="star star-4" for="star-4"></label>
+				<input class="star-update star-3" id="star-3" type="radio" value="3" name="rate[rating]">
+				<label class="star star-3" for="star-3"></label>
+				<input class="star-update star-2" id="star-2" type="radio" value="2" name="rate[rating]">
+				 <label class="star star-2" for="star-2"></label>
+				<input class="star-update star-1" id="star-1" type="radio" value="1" name="rate[rating]"> 
+				<label class="star star-1" for="star-1"></label>
+				<input type="hidden" name="rate_id" value = "<%= @rate.id %>">
+			<% end %>
+		</div>
+		<div>
+		
+	</div>
+	</div>
+	<div class = "col-sm-6" style = "float: left;">
+		<p>	
+			<p id = "rate-noitice" ></p>
+			<span>sản phẩm được đánh giá </span><span id = "append-average"><%= @product.avarage.round(1) %></span> <span style = "color: yellow" class="fa fa-star checked"></span> bởi <span id = "rater"><%= @product.rates.count  %></span> <span>độc giả</span> 	
+		</p>
+	<% if user_signed_in? %>
+			<input type="hidden" name="product_id" value = "<%= @product.id %>">
+			<input type="hidden" name="cart_id" value = "<%= current_cart.id%>">
+			<input style = "width: 50px" type="number" name="quantity_product" value = "1" min = 1>
+		<% if @cart_product.nil? %>
+			<button id = "create_cart_product" class = "btn"><b>add to cart</b><i class="fa fa-shopping-cart" style="font-size:20px"></i></button>
+		<% else %>
+			<input type="hidden" name="cart_product_id" value = "<%= @cart_product.id %>">
+			<input type="hidden" name="old_quantity" value = "<%=@cart_product.quantity %>">
+			<button id = "update_cart_product" class = "btn"><b>add to cart</b><i class="fa fa-shopping-cart" style="font-size:20px"></i></button>
+		<% end %>
+	<% end %>
+	</div>
+	
+</div>
+
+<script type="text/javascript">
+	function tabFunction(tabname, element, color){
+	var tabcontent, tablinks, i
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i=0; i<tabcontent.length; i++){
+		tabcontent[i].style.display = 'none';
+
+	}
+	tablinks = document.getElementsByClassName("tablink")
+	for (i=0; i < tablinks.length; i++){
+		tablinks[i].style.backgroundColor = "";
+	}
+	document.getElementById(tabname).style.display = "block"
+	document.getElementById(tabname).style.backgroundColor = "#F0FFFF"
+	element.style.backgroundColor = 'orange'
+}
+document.getElementById('openDefault').click()
+</script>
+
+<script type="text/javascript">
+	$(document).on('turbolinks:load', function(){
+		$('.star').click(function(){
+			if ($(this).is(':checked')){
+				var rater = parseInt($('#rater').text())
+				$.ajax({
+					url: '/rates',
+					type: 'post',
+					dataType: 'json',
+					data: {
+						user_id: $('input[name="user_id"]').val(),
+						product_id: $('input[name="product_id"]').val(),
+						rate: $(this).val()
+					},
+					success: function(data){
+						$('#append-average').html(data.data_rate.toFixed(1))
+						$('#rate-noitice').html("cảm ơn đánh giá của bạn")
+						setTimeout(function(){$('#rate-noitice').html("")},5000)
+						$('#rater').html(rater+1)
+						$('#form-rate').remove()
+						$('#openDefault').click()
+					}
+				})
+			}
+		})
+		$('.star-update').click(function(){
+			if ($(this).is(':checked')){
+				var rate_id = $('input[name="rate_id"]').val()
+				$.ajax({
+					url: '/rates/'+rate_id,
+					type: 'put',
+					dataType: 'json',
+					data: {
+						product_id: $('input[name="product_id"]').val(),
+						rate: $(this).val()
+					},
+					success: function(data){
+						$('#append-average').html(data.data_rate.toFixed(1))
+						$('#rate-noitice').html("cảm ơn đánh giá của bạn")
+						setTimeout(function(){$('#rate-noitice').html("")},5000)
+						$('#openDefault').click()
+					}
+				})
+			}
+		})
+	})
+</script>

@@ -1,0 +1,31 @@
+
+	<%= form_for [:admin, @product], remote: true do |f|  %>
+		<div class = "field">
+			<%= f.label :name,'book name' %>
+			<%= f.text_field :name, class: "form-control" %>
+		</div>
+		<div class = "field">
+			<%= f.label :author %>
+			<%= f.text_field :author, class: "form-control" %>
+		</div>
+		<div class = "field">
+			<%= f.label :url_image %>
+			<%= f.text_field :url_image, class: "form-control" %>
+		</div>
+		<div class = "field">
+			<%= f.label :description%>
+			<%= f.text_area :des, class: "form-control"  %>
+		</div>
+		<div class = "field">
+			<%= f.label :price %>
+			<%= f.number_field :price, class: "form-control" %>
+		</div>
+		<div class = "field">
+			<%= f.label :category %>
+			<%= collection_check_boxes(:product, :category_ids, Category.all, :id, :cate) do |b|%>
+				<%= b.label(:"data-value" => b.value) { b.check_box + b.text } %>
+			<% end %>
+		</div>
+		<%= f.submit 'submit' %>
+	<% end %>
+</div

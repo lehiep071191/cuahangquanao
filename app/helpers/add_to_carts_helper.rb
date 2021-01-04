@@ -1,0 +1,2 @@
+module AddToCartsHelper
+end

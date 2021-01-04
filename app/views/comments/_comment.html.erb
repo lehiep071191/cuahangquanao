@@ -1,0 +1,22 @@
+<div class = "row">
+	<div class = "col-sm-2">
+	<% if comment.user.image.present?%>
+		<%= image_tag comment.user.image, class: "avatar" if comment.user.image.attached? %>
+	<% else %>	
+		<%= image_tag 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg', class: "avatar" %>
+	<% end %>
+	</div>
+	<div class = "col-sm-10">
+		<p style = "font-weight: bold">
+			<% if comment.user.name.present? %>
+				<%= comment.user.name%>:
+			<% else %>
+				<%= comment.user.email %>:
+			<% end %>	
+		</p>
+		<p style = "margin-left: 30px">
+			<%= comment.content %>
+		</p>
+	</div>
+	
+</div>

@@ -1,0 +1,19 @@
+<span class = "dathang" id = "dathang-<%= product.id %>" data-id = "<%= product.id %>" >
+	<% if user_signed_in? %>
+		<% current_cart.cart_products.each do |item| %>
+			<% if item.product_id == product.id %>
+			 	<span class= "test" id= "test-<%= product.id %>" style = "display:none; color:red" >ban da co mon hang nay trong gio hang</span> 	
+			<% end %>
+		<% end %>
+	<% end %>	
+	<% if user_signed_in? %>
+		<span id = "remove-<%= product.id %>">
+			<%= form_for @cart_product do |f| %>
+				<%= f.hidden_field :product_id, value: product.id  %>
+				<%= f.hidden_field :cart_id, value: current_cart.id  %>
+				<%= f.number_field :quantity, min: 1, value: 1, :style=>"width:50px" %>
+				<%= f.submit 'add to cart', class: 'btn btn-danger', id: "addcart#{product.id}" %>
+			<% end %>	
+		</span>
+	<% end %>
+</span>

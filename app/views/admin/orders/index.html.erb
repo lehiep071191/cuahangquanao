@@ -1,0 +1,102 @@
+<style type="text/css">
+	.dropbtn {
+	  background-color: #white;
+	  color: black;
+	  padding: 16px;
+	  font-size: 16px;
+	  border: none;
+	  cursor: pointer;
+	}
+
+	.dropdown {
+	  position: relative;
+	  display: inline-block;
+	}
+
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: #f9f9f9;
+	  min-width: 160px;
+	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	  z-index: 1;
+	}
+
+	.dropdown-content a {
+	  color: black;
+	  padding: 12px 16px;
+	  text-decoration: none;
+	  display: block;
+	}
+
+	.dropdown-content a:hover {background-color: #f1f1f1}
+
+	.dropdown:hover .dropdown-content {
+	  display: block;
+	}
+
+	.dropdown:hover .dropbtn {
+	  background-color: #3e8e41;
+	}
+	#admin_order_info{
+		margin-top: 50px;
+	}
+	.header_order{
+		text-align: center;
+		font-weight: bolder;
+		font-size: 30px;
+		color: gray;
+	}
+</style>
+<div id = "admin_noitice_order">
+	
+</div>
+<div class = "header_order">
+	<i class="fa fa-flag-o"></i>  TRANG QUẢN LÝ ORDER
+</div>
+<div>
+	<div class="dropdown">
+	  <button class="dropbtn">order status</button>
+	  <div class="dropdown-content">
+	    <% Order.statuses.each do  |value,key| %>
+		    <% if key.to_i != 7  %>
+				<p class = "update_status btn" data-status = "<%= key %>"><%= value %></p>
+			<% end %>	
+		<% end %>
+	  </div>
+	</div>
+	<div class="dropdown">
+	  <button class="dropbtn">lọc theo status</button>
+	  <div class="dropdown-content">
+	    <% Order.statuses.each do  |value,key| %>
+			<%= link_to value, admin_orders_path(:status => value) %>
+		<% end %>
+		<%= link_to 'tất cả các order', admin_orders_path %>
+	  </div>
+	</div>
+</div>
+<div id = "admin_order_infow3">
+	<input type="checkbox" name="checkall"> Chon tat ca
+	<table class = "w3-table w3-striped">
+		<%@orders.each do |order| %>
+			<tr>
+				<td>
+					<input type="checkbox" name="update-status" value = "<%= order.id %>" id = "checkitem-<%= order.id %>">
+				</td>
+				<td>
+					<%=link_to  order.username, admin_order_path(order) %>
+				</td>
+				<td>
+					<%= order.address %>
+				</td>
+				<td>
+					<%= order.phone %>
+				</td>
+				<td id = "order_status-<%= order.id %>" style = " font-weight: bold">
+					<%= order.status %>
+				</td>
+			</tr>
+			
+		<% end %>
+	</table>
+</div>

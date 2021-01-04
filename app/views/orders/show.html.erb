@@ -1,0 +1,113 @@
+<div>
+	<center><b><h1></big>Đơn hàng của <%= @order.user.name || @order.user.email %></h1></b></center>
+</div>
+<div id = "noitice-status">
+	
+</div>
+<table class="w3-table w3-striped w3-border">	
+		<tr>
+			<th>
+				Ten san pham	
+			</th>
+			<th>
+				Gia san pham
+			</th>
+			<th>
+				So luong
+			</th>
+			<th>
+				Thanh tien
+			</th>
+			
+		</tr>
+	<% @order.order_items.each do |item| %>
+		<tr>
+			<td>
+				<%= item.product.name %>
+			</td>
+			<td>
+				<%= item.unit_price %>
+			</td>
+			<td>
+				<%= item.quantity %>
+			</td>
+			<td>
+				<%= item.total %>
+			</td>
+
+		</tr>
+	<% end %>
+	<tr style = "color: red; font-weight: bold;">
+		<td>
+			Tổng tiền:
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			<%= @order.subtotal %>
+		</td>
+	</tr>
+	<tr style = "color: red; font-weight: bold;">
+		<td>
+			Trạng thái đơn hàng:
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+		<td id = "order-status">
+			<%= @order.status %>
+		</td>
+	</tr>
+	<tr style = "color: black; font-weight: bold;">
+		<td>
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			<input type="hidden" name="status-cancel" value = "7">
+			<input type="hidden" name="order_id" value="<%= @order.id %>">
+			<button id = "cancel-order" class = "btn btn-danger">hủy đơn hàng</button>
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#cancel-order').click(function(){
+			debugger
+			var id = $('input[name="order_id"]').val()
+			$.ajax({
+				url: '/orders/'+id,
+				dataType: 'json',
+				type: 'put',
+				data: {
+					authenticity_token: $('[name="csrf-token"]')[0].content,
+					status: ($('input[name="status-cancel"]').val())
+				},
+				success: function(data){
+					if (data.data_success == true){
+						$('#noitice-status').html('<span style = "color: red">Đơn hàng đã được hủy</span>')
+						setTimeout(function(){$('#noitice-status').html("");}, 5000);
+						$('#order-status').html(data.data_cancel)
+					}else {
+						$('#noitice-status').html('<span style = "color: red">'+data.data_noitice+'</span>')
+						setTimeout(function(){$('#noitice-status').html("");}, 5000);
+					}
+				}
+
+
+			})
+		})
+	})
+</script>
