@@ -1,0 +1,42 @@
+
+
+<div class="header-dark">
+    <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+        <div class="container"><a class="navbar-brand" href="/home">BOOKSTORE</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Link</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Menu </a>
+                        <div class="dropdown-menu" role="menu">
+                            <% if user_signed_in? %>                     
+                            <%= link_to 'edit_user', edit_user_registration_path(current_user), class: "dropdown-item", role: "presentation" %>
+                            <% end %> 
+                        <% if user_signed_in? && current_user.admin? %>	
+                        <a class="dropdown-item" role="presentation" href="/admin/products">Admin</a></div>
+                        <% end %>
+                    </li>
+                </ul>
+                <form class="form-inline mr-auto" target="_self">
+                    <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" name="search" id="search-field"></div>
+                </form>
+                <% if user_signed_in?%>
+					<a class="btn btn-light action-button" rel="nofollow" data-method="delete" href="/users/sign_out">logout</a>
+					<%= link_to  cart_path(current_cart), class: "btn btn-light action-button" do %> gio hang
+                        <i class="fa fa-shopping-cart"></i>
+                    <% end %>
+                    <%= link_to 'checkout', orders_path, class: "btn btn-light action-button" %>
+				<% else %>
+                	<a class="btn btn-light action-button" role="button" href="/users/sign_in">Login</a>
+				<% end %>
+        </div>
+    </nav>
+    <div class="container hero">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="text-center">Sách là cội nguồn của tri thức, chào mừng bạn đã đến với BookStore </h1>
+                <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/hAAlDoAtV7Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            </div>
+        </div>
+    </div>
+</div>

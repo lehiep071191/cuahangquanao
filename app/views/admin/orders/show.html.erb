@@ -1,0 +1,75 @@
+<center><h1>đơn hàng của <%= @order.user.name || @order.user.email%></h1></center>
+<table class ="w3-table w3-striped">
+	<tr>
+		<th>
+			ten san pham
+		</th>
+		<th>
+			gia 
+		</th>
+		<th>
+			so luong
+		</th>
+		<th>
+			thanh tien
+		</th>
+	</tr>
+	<% @order.order_items.each do |item| %>
+		<tr>
+			<td>
+				<%= item.product.name%>	
+			</td>
+			<td>
+				<%= item.unit_price%>
+			</td>
+			<td>
+				<%= item.quantity%>
+			</td>
+			<td>
+				<%= item.total%>
+			</td>
+		</tr>
+	<%end%>
+	<tr>
+		<td>
+			Tong so tien
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			<%= @order.subtotal%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			dia chi giao hang
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			<%= @order.address%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			dien thoai nguoi nhan
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			<%= @order.phone%>
+		</td>
+	</tr>
+</table>

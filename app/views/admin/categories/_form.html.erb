@@ -1,0 +1,11 @@
+<div class = "category_form_toggle">
+	<%= form_for [:admin, @category], remote: true do |f|  %>
+		<div class = "field">	
+			<%= f.label :cate, 'category' %>
+			<%= f.text_field :cate, class: "form-control"  %>
+		</div>
+		<div>	
+			<%= f.submit 'submit', class: 'btn btn-default' %>
+		</div>
+	<% end %>
+</div>

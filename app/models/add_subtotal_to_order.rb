@@ -1,0 +1,2 @@
+class AddSubtotalToOrder < ApplicationRecord
+end

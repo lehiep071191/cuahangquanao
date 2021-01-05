@@ -1,0 +1,15 @@
+<table class="w3-table w3-striped w3-border">
+	<% @orders.each_with_index do |order, index| %>
+			<tr>
+				<td>
+					<%= index + 1 %>
+				</td>
+				<td>
+					<%= link_to  "don hang so #{index + 1}", order_path(order)  %>
+				</td>
+				<td>
+					<%= order.subtotal %>
+				</td>
+			</tr>
+	<% end %>
+</table>

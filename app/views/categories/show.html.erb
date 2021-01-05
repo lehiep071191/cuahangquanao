@@ -1,0 +1,26 @@
+<div class= "row" >
+	<div class = "col-sm-3" style = "float: left;">
+	<center><b><h3 style = "font-family: Time New Roman; color: gray">Category</h3></b></center>
+		<% Category.all.each do |category| %>
+			<p style = "width: 80%" class = "btn btn-default"><%= link_to category.cate, category_path(category), class: "btn" %><p>
+		<% end %>
+	</div>
+	<div class = "col-sm-9" style = "float: left;">
+		<center><b><h3 style = "font-family: Time New Roman; color: gray">New book</h3></b></center>
+	<div class= "row d-inline-flex">
+		<% @products.each do |product|  %>
+			<div class ="col-12 col-sm-4 col-md-3 p-2">
+		       <div class="d-flex flex-column text-center border height100">
+		       	<% if product.url_image.present? %>
+							<%= link_to image_tag(product.url_image, width: "60%",position: "absolute"), product_path(product)  %>
+						<% else %>
+							<%= link_to image_tag('https://cdn.filepicker.io/api/file/B8yKUfUSpCCsH0OvG3Eu/convert?fit=max&h=874&w=1312&compress=true&fit=max', width: "60%",position: "absolute"), product_path(product) %>
+						<% end %>	
+						<div class = "centered"><%= product.name %></div>
+						<div style = "color: blue;">Gia: <%= product.price %></div>
+		       </div>
+		   </div>
+		<% end %>
+		</div>
+	</div>
+</div>

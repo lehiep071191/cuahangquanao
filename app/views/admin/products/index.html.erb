@@ -1,0 +1,26 @@
+<%= link_to 'create category', new_admin_category_path, remote: true, class: "btn btn-primary"   %>
+<%= link_to 'create book', new_admin_product_path, remote: true,class: "btn btn-primary"  %>
+<div class = "form" style = "width: 35%">
+</div>
+<table class="w3-table w3-striped w3-border">
+	<tr>
+		<th>
+			Ten sach
+		</th>
+		<th>
+			Tac gia
+		</th>
+		<th>
+			Mo ta
+		</th>
+		<th>
+			Gia
+		</th>
+		<th>
+			Chinh sua
+		</th>
+	</tr>
+	<tbody id = "tbody">
+		<%= render @products %>
+	</tbody>
+</table>

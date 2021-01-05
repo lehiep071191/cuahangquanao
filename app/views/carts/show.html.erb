@@ -1,0 +1,57 @@
+<table class="w3-table w3-striped ">
+	<tr>
+		<th>
+			ten sach
+		</th>
+		<th>
+			gia
+		</th>
+		<th>
+			so luong
+		</th>
+		<th>
+			thanh tien
+		</th>
+	</tr>
+	<% @cart.cart_products.each do |p| %>
+		<tr id = "item-<%= p.id %>">
+			<td>
+				
+				<%= p.product.name %> 
+			</td>
+			<td id = "price-<%= p.id %>">
+				<%= p.product.price %>    
+			</td>
+			<td>	
+				<input id = "quantity-<%= p.id %>" name = "quantity-cart" data-id = "<%= p.id %>" type="number" value="<%= p.quantity %>" min = 1 style = "width: 50px">
+			</td>
+			<td id = "total-<%= p.id %>">
+				<%= p.total %>
+			</td>
+			<td>
+				<%= link_to  cart_product_path(p), method: :delete, remote: true do %>
+					<i class="fa fa-remove" style="font-size:20px;color:red"></i>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+	<tr>
+		<td>
+			Tong Tien:
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			 <span class = "subtotal" style = "color: red; font-weight: bolder;"><%= @cart.subtotal %> <span>
+		</td>
+	</tr>
+</table>
+<div>
+	<% if current_cart.cart_products.any? %>
+		<%= link_to 'mua hang', new_order_path, class: 'btn btn-primary' %>
+	<% end %>	
+</div>

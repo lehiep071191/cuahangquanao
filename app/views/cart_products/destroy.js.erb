@@ -1,0 +1,5 @@
+var remove_total = parseInt($('#total-<%= @cart_product.id %>').text())
+var sum = parseInt($('.subtotal').text())
+sum = sum - remove_total
+$('.subtotal').html(sum)
+$('#item-<%= @cart_product.id %>').remove()

@@ -1,0 +1,17 @@
+<tr id = "sach-<%= product.id %>">
+	<td>
+		<%= product.name %>
+	</td>
+	<td>
+		<%= product.author%>
+	</td>
+	<td>
+		<%= product.des %>
+	</td>
+	<td>
+		<%= product.price %>
+	</td>
+	<td>
+		<%= link_to 'edit', edit_admin_product_path(product), remote: true %>
+	</td>
+</tr>
