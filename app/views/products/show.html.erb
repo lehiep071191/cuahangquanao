@@ -107,8 +107,10 @@
 	</div>
 	<div class = "col-sm-6" style = "float: left;">
 		<p>	
+			<% if @product.rates.any?%>
 			<p id = "rate-noitice" ></p>
-			<span>sản phẩm được đánh giá </span><span id = "append-average"><%= @product.avarage.round(1) %></span> <span style = "color: yellow" class="fa fa-star checked"></span> bởi <span id = "rater"><%= @product.rates.count  %></span> <span>độc giả</span> 	
+			<span>sản phẩm được đánh giá </span><span id = "append-average"><%= @product.avarage.round(1) %></span> <span style = "color: yellow" class="fa fa-star checked"></span> bởi <span id = "rater"><%= @product.rates.count  %></span> <span>độc giả</span> 
+			<% end %>	
 		</p>
 	<% if user_signed_in? %>
 			<input type="hidden" name="product_id" value = "<%= @product.id %>">
