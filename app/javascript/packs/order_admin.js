@@ -21,7 +21,7 @@
 				dataType: 'json',
 				method: 'put',
 				data: {
-					authenticity_token: $('[name="csrf_token"]').content,
+					authenticity_token:  $('meta[name="csrf-token"]').attr('content') ,
 					status: status
 				},
 				success: function(data){

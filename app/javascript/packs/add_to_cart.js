@@ -8,6 +8,7 @@ $(document).on('turbolinks:load', function(){
 				method: 'post',
 				dataType: 'json',
 				data:  {
+					authenticity_token:  $('meta[name="csrf-token"]').attr('content') ,
 					product_id: $('input[name="product_id"]').val(),
 					cart_id: $('input[name="cart_id"]').val(),
 					quantity: quantity
@@ -24,6 +25,7 @@ $(document).on('turbolinks:load', function(){
 				method: 'put',
 				dataType: 'json',
 				data:  {
+					authenticity_token:  $('meta[name="csrf-token"]').attr('content') ,
 					product_id: $('input[name="product_id"]').val(),
 					cart_id: $('input[name="cart_id"]').val(),
 					quantity: quantity + old_quantity
