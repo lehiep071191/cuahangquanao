@@ -16,6 +16,13 @@ class Admin::OrdersController < Admin::ApplicationController
 		render json: {
 			data_update_order: Order.find_by(id: ids.first).status
 		}
+		byebug
+		if params[:status] == "1"
+			ids.each do |id|
+				@order = Order.find_by id: id
+				OrderMailer.destroy_order(@order).deliver_now
+			end	
+		end
 	end	
 	private	
 	def set_order

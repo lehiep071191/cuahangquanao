@@ -17,9 +17,10 @@ class OrdersController < ApplicationController
       pr = order_params.merge(status: params[:status].to_i)
     	@order = Order.new(pr)
     	if @order.save!
+        OrderMailer.order(@order).deliver_now
     		current_cart.destroy
-  		session[:cart_id] = nil
-  		cookies.signed[:cart_id] = nil
+    		session[:cart_id] = nil
+    		cookies.signed[:cart_id] = nil
     		redirect_to @order
     	end	
     end

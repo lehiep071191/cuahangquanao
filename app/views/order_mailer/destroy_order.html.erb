@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>confirm order</title>
+</head>
+<body>
+	hello <%= @order.user.email %>
+	<% @order.order_items.each do |order_detail|%>
+		Product: <%= order_detail.product.name %> 
+		Quantity: <%= order_detail.quantity %>
+	<% end %>
+
+	da bi huy boi nguoi ban 
+</body>
+</html>
